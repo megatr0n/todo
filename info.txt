@@ -1,0 +1,27 @@
+
+THese are changes that have been made to the default laravel files
+
+1) C:\Users\admin\Documents\XAMPP\htdocs\quickstart\public\index.php
+inserted in line 25:
+$current_script_path = realpath(dirname(__FILE__)).'/';	
+require_once($current_script_path.'../database/migrations/databasebuilder.php'); 
+
+
+2) C:\Users\admin\Documents\XAMPP\htdocs\quickstart\database\migrations\databasebuilder.php
+this is not a default laravel file. It used to automatically create the correct database.
+
+
+3) C:\Users\admin\Documents\XAMPP\htdocs\quickstart\app\Http\Middleware\VerifyCsrfToken.php
+inserted in line 16:
+'/*'
+this removes CSRF protection from all routes during app testing/development.
+
+
+
+
+
+
+
+
+
+
