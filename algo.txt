@@ -1,0 +1,14 @@
+
+
+* need form for creating projects and displaying them in a list. 
+  Just copy the same code used to create tasks. Follow the same procedure
+  used for displaying the tasks lists for the projects list.
+  
+* modify the form to create a new task by including the additional fields:
+name(already there)and project name(drop-down list). Also modify the table for displaying
+all tasks by including the additional columns:
+name(already there), time(automatically set at creation), priority(automatically set at count), project, controls(edit and delete).    
+ 
+
+
+
