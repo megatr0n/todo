@@ -18,7 +18,9 @@ class ItemController extends Controller
     	return view('test',compact('panddingItem','completeItem'));
     }
     public function updateItems(Request $request)
-    { MODIFY TASK TABLE TO INCLUDE 'STATUS' AND 'ORDER' COLUMNS
+    { 
+	  //MODIFY TASK TABLE TO INCLUDE 'STATUS' AND 'ORDER' COLUMNS.
+	  //consider using strings for status such as 'pending' and 'complete'
     	$input = $request->all();
         
 		if(!empty($input['pending']))
