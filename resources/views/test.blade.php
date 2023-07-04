@@ -25,7 +25,7 @@
                 <ul class="list-group shadow-lg connectedSortable" id="padding-item-drop">
                   @if(!empty($panddingItem) && $panddingItem->count())
                     @foreach($panddingItem as $key => $value)
-                      <li class="list-group-item" item-id="{{ $value->id }}">{{ $value->title }}</li>
+                      <li class="list-group-item" item-id="{{ $value->id }}">{{ $value->name }}</li>
                     @endforeach
                   @endif
                 </ul>

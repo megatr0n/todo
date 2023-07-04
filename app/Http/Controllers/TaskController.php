@@ -79,4 +79,6 @@ class TaskController extends Controller
 
         return redirect('/tasks');
     }
+	
+ 	
 }

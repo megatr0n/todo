@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ItemController extends Controller
 {
     public function itemView()
-    {
+    { //CHANGE TO USE COLUMN NAMES OF TASKS TABLE
     	$panddingItem = Item::where('status',0)
 		                    ->orderBy('order')
 							->get();
@@ -18,7 +18,7 @@ class ItemController extends Controller
     	return view('test',compact('panddingItem','completeItem'));
     }
     public function updateItems(Request $request)
-    {
+    { MODIFY TASK TABLE TO INCLUDE 'STATUS' AND 'ORDER' COLUMNS
     	$input = $request->all();
         
 		if(!empty($input['pending']))
