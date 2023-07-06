@@ -15,11 +15,11 @@
     }
   </style>
 </head>
-<body class="bg-light">
+<body>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-        <h2 class="text-center pb-3 pt-1">Learning drag and dropable - CodeCheef</h2>
+        <h2 class="text-center pb-3 pt-1">ELearning drag and dropable - CodeCheef</h2>
         <div class="row">
             <div class="col-md-5 p-3 bg-dark offset-md-1">
                 <ul class="list-group shadow-lg connectedSortable" id="padding-item-drop">
@@ -34,7 +34,7 @@
                 <ul class="list-group  connectedSortable" id="complete-item-drop">
                   @if(!empty($completeItem) && $completeItem->count())
                     @foreach($completeItem as $key => $value)
-                      <li class="list-group-item " item-id="{{ $value->id }}">{{ $value->title }}</li>
+                      <li class="list-group-item " item-id="{{ $value->id }}">{{ $value->name }}</li>
                     @endforeach
                   @endif
                 </ul>

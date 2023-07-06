@@ -42,8 +42,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Current Tasks
-                    </div>
-
+                    </div>			
                     <div class="panel-body">
                         <table class="table table-striped task-table">
                             <thead>
@@ -74,5 +73,5 @@
                 </div>
             @endif
         </div>
-    </div>
+    </div>	
 @endsection

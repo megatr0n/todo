@@ -2,24 +2,24 @@
 
 //controller
 namespace App\Http\Controllers;
-use App\Item;
+use App\Task;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
     public function itemView()
     { //CHANGE TO USE COLUMN NAMES OF TASKS TABLE
-    	$panddingItem = Item::where('status',0)
-		                    ->orderBy('order')
+    	$panddingItem = Task::where('status',0)
+		                    ->orderBy('priority')
 							->get();
-    	$completeItem = Item::where('status',1)
-		                    ->orderBy('order')
+    	$completeItem = Task::where('status',1)
+		                    ->orderBy('priority')
 							->get();
     	return view('test',compact('panddingItem','completeItem'));
     }
     public function updateItems(Request $request)
     { 
-	  //MODIFY TASK TABLE TO INCLUDE 'STATUS' AND 'ORDER' COLUMNS.
+	  //DONE*** MODIFY TASK TABLE TO INCLUDE 'STATUS' AND 'ORDER' COLUMNS.
 	  //consider using strings for status such as 'pending' and 'complete'
     	$input = $request->all();
         
@@ -27,10 +27,10 @@ class ItemController extends Controller
     	{
 			foreach ($input['pending'] as $key => $value) {
 				$key = $key + 1;
-				Item::where('id',$value)
+				Task::where('id',$value)
 						->update([
-							'status'=> 0,
-							'order'=>$key
+							'status'=>0,
+							'priority'=>$key
 						]);
 			}
 		}
@@ -39,10 +39,10 @@ class ItemController extends Controller
     	{
 			foreach ($input['accept'] as $key => $value) {
 				$key = $key + 1;
-				Item::where('id',$value)
+				Task::where('id',$value)
 						->update([
-							'status'=> 1,
-							'order'=>$key
+							'status'=>1,
+							'priority'=>$key
 						]);
 			}
 		}

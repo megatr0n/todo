@@ -30,14 +30,15 @@ Route::group(['middleware' => ['web']], function () {
         return view('welcome');
     })->middleware('guest');
 
+	Route::post('/update-items', 'TaskController@updateItems')->name('update.items');	
     Route::get('/tasks', 'TaskController@index');
+	//Route::get('/tasks', 'TaskController@itemView');
     Route::post('/task', 'TaskController@store');
     Route::delete('/task/{task}', 'TaskController@destroy');
-
+	
 	//route drag and drop demo found here https://www.codecheef.org/article/laravel-jquery-drag-and-drop-with-sortable-data-example
-	//Route::get('/', 'TaskController@itemView');
-	Route::get('/', 'ItemController@itemView');
-	Route::post('/update-items', 'ItemController@updateItems')->name('update.items');
+	//Route::get('/', 'ItemController@itemView');
+	//Route::post('/update-items', 'ItemController@updateItems')->name('update.items');
 	
     Route::auth();
 
