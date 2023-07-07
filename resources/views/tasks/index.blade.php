@@ -84,19 +84,12 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 	  $( function() {
-		$( "#padding-item-drop, #complete-item-drop" ).sortable({
-		  connectWith: ".connectedSortable",
-		  opacity: 0.5,
-		});
+		$( "#complete-item-drop" ).sortable();
+		
 		$( ".connectedSortable" ).on( "sortupdate", function( event, ui ) {
-			var pending = [];
 			var accept = [];
-			$("#padding-item-drop li").each(function( index ) {
-			  if($(this).attr('item-id')){
-				pending[index] = $(this).attr('item-id');
-			  }
-			});
-			$("#complete-item-drop li, div, tr").each(function( index ) {
+			
+			$("#complete-item-drop tr").each(function( index ) {
 			  accept[index] = $(this).attr('item-id');
 			});
 			$.ajax({
@@ -105,7 +98,7 @@
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				},
-				data: {pending:pending,accept:accept},
+				data: {accept:accept},
 				success: function(data) {
 				  console.log('success');
 				}
@@ -115,7 +108,5 @@
 	  });
 	</script>	
 	<!-- scripts for drag&drop above -->			
-	
-
 	
 @endsection
