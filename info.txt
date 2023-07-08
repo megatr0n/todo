@@ -25,8 +25,80 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 this fixes error: count(): Parameter must be an array or an object.
 
 
+5) The drag&drop feature found here https://www.codecheef.org/article/laravel-jquery-drag-and-drop-with-sortable-data-example
+was installed.
+C:\Users\admin\Documents\XAMPP\htdocs\quickstart\resources\views\tasks\index.blade.php inserted in line 81:
+	<!-- scripts for drag&drop below -->
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+	  $( function() {
+		$( "#complete-item-drop" ).sortable();
+		
+		$( ".connectedSortable" ).on( "sortupdate", function( event, ui ) {
+			var accept = [];
+			
+			$("#complete-item-drop tr").each(function( index ) {
+			  accept[index] = $(this).attr('item-id');
+			});
+			$.ajax({
+				url: "{{ route('update.items') }}",
+				method: 'POST',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				data: {accept:accept},
+				success: function(data) {
+				  console.log('success');
+				}
+			});
+			  
+		});
+	  });
+	</script>	
+	<!-- scripts for drag&drop above -->			
+ 
+and inserted in line 52:
+                            <tbody  class="list-group  connectedSortable" id="complete-item-drop">
+								@if(!empty($completeItem) && $completeItem->count())
+									@foreach ($completeItem as $key => $task)
+										<tr item-id="{{ $task->id }}">
+											<td class="table-text"><div>{{ $task->name }}</div></td>
+
+											<!-- Task Delete Button -->
+											<td>
+												<form action="{{url('task/' . $task->id)}}" method="POST">
+													{{ csrf_field() }}
+													{{ method_field('DELETE') }}
+
+													<button type="submit" id="delete-task-{{ $task->id }}" class="btn btn-danger">
+														<i class="fa fa-btn fa-trash"></i>Delete
+													</button>
+												</form>
+											</td>
+										</tr>
+									@endforeach
+								@endif	
+                            </tbody>
 
 
+6) C:\Users\admin\Documents\XAMPP\htdocs\quickstart\resources\views\layouts\app.blade.php							
+ inserted in line 28:
+    <!-- drag&drop scripts and components -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+<!--   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ --> 
+  <style>
+    #draggable { 
+        width: 150px;
+        height: 150px;
+        padding: 0.5em;
+    }
+  </style>	 
 
-
-
+  
+  
+7) dropdown list implemented here https://stackoverflow.com/questions/54029008/need-to-create-a-drop-down-list-in-laravel-and-insert-the-results-in-a-new-data
+was implemented. 
