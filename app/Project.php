@@ -4,14 +4,14 @@ namespace App;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Project extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'priority', 'status', 'project'];
+    protected $fillable = ['name', 'detail'];
     
     /**
      * The attributes that should be cast to native types.
@@ -23,7 +23,7 @@ class Task extends Model
     ];
 
     /**
-     * Get the user that owns the task.
+     * Get the user that owns the Project.
      */
     public function user()
     {

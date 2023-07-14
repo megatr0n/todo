@@ -5,90 +5,83 @@
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    New Task
+                    New Project
                 </div>
 
                 <div class="panel-body">
                     <!-- Display Validation Errors -->
                     @include('common.errors')
+
 					
-                    <!-- New Task Form -->
-                    <form action="{{ url('task') }}" method="POST" class="form-horizontal">
+                    <!-- New Project Form -->
+                    <form action="{{ url('project') }}" method="POST" class="form-horizontal">
                         {{ csrf_field() }}
 
-                        <!-- Task Name -->
+                        <!-- Project Name -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Task</label>
+					
+						
+                            <label for="task-name" class="col-sm-3 control-label">Project</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
+                                <input type="text" name="name" id="task-name" class="form-control" value="{{ old('project') }}">
                             </div>
-							
-							<br /><br />
-                        <!-- Add Task Dropdownlist for Project -->	
-						    @if(session('success'))
-							  <h1>{{session('success')}}</h1>
-						    @endif						
-                            <label for="task-project" class="col-sm-3 control-label">Project</label>
+                            <br /><br />
+                            <label for="task-name" class="col-sm-3 control-label">Details</label>
 
                             <div class="col-sm-6">
-								<select class="form-control" id="selectproject" name="project_selected" required focus>
-									<option value="" disabled selected>Please select project</option>        
-										@foreach($projects as $project)
-										<option value="{{$project->id}}">{{ $project->name }}</option>
-										@endforeach
-							    </select>
-							<label class="task-name"  id="displayproject">Show selected project here</label>								
-                            </div>							
-                        </div>
+                                <textarea name="detail" id="task-name" class="form-control" value="{{ old('detail') }}" rows="4">Write details of the project here.</textarea>
+                            <br /><br />								
+                            </div>
+						
+						
+							<!-- remove below this -->
 
-                        <!-- Add Task Button -->
+							<!-- remove above this -->							
+						
+                        <!-- Add Project Button -->
                         <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-6">
+                            <div class="col-sm-offset-3 col-sm-6"><span>&nbsp&nbsp</span>
                                 <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-btn fa-plus"></i>Add Task
+                                    <i class="fa fa-btn fa-plus"></i>Add Project
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form>	
                 </div>
             </div>
 
-            <!-- Current Tasks -->
-            @if (count($tasks) > 0)
-				@if (count($projects) > 0)
-			        <h1>Many projects found.</h1>
-				@endif	
+            <!-- Current Projects -->
+            @if (count($projects) > 0)
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Current Tasks
-                    </div>			
+                        Current Projects
+                    </div>
+
                     <div class="panel-body">
                         <table class="table table-striped task-table">
                             <thead>
-                                <th>Task</th>
+                                <th>Project</th>
                                 <th>&nbsp;</th>
                             </thead>
-                            <tbody  class="list-group  connectedSortable" id="complete-item-drop">
-								@if(!empty($completeItem) && $completeItem->count())
-									@foreach ($completeItem as $key => $task)
-										<tr item-id="{{ $task->id }}">
-											<td class="table-text"><div>{{ $task->name }}</div></td>
+                            <tbody>
+                                @foreach ($projects as $project)
+                                    <tr>
+                                        <td class="table-text"><div>{{ $project->name }}</div></td>
 
-											<!-- Task Delete Button -->
-											<td>
-												<form action="{{url('task/' . $task->id)}}" method="POST">
-													{{ csrf_field() }}
-													{{ method_field('DELETE') }}
+                                        <!-- Task Delete Button -->
+                                        <td>
+                                            <form action="{{url('project/' . $project->id)}}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
 
-													<button type="submit" id="delete-task-{{ $task->id }}" class="btn btn-danger">
-														<i class="fa fa-btn fa-trash"></i>Delete
-													</button>
-												</form>
-											</td>
-										</tr>
-									@endforeach
-								@endif	
+                                                <button type="submit" id="delete-project-{{ $project->id }}" class="btn btn-danger">
+                                                    <i class="fa fa-btn fa-trash"></i>Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>									
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Task;
+use App\Project;
 use App\Repositories\TaskRepository;
 
 class TaskController extends Controller
@@ -18,7 +19,6 @@ class TaskController extends Controller
      * @var TaskRepository
      */
     protected $tasks; 
-	protected $panddingItem; 
 	protected $completeItem;
 
     /**
@@ -42,9 +42,10 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     { 
+	 $projects = $this->populateProjects();
 	 $this->itemView();
         return view('tasks.index', [
-            'tasks' => $this->tasks->forUser($request->user()), 'panddingItem' => $this->panddingItem, 'completeItem' => $this->completeItem,
+            'tasks' => $this->tasks->forUser($request->user()), 'completeItem' => $this->completeItem, 'projects' => $projects,
         ]);
     }
 
@@ -56,12 +57,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+		$tnum = count($tasks);
         $this->validate($request, [
             'name' => 'required|max:255',
         ]);
 
         $request->user()->tasks()->create([
-            'name' => $request->name,
+            'name' => $request->name, 'project' => $request->user_selected, 'priority' => $tnum,
         ]);
 
         return redirect('/tasks');
@@ -85,35 +87,17 @@ class TaskController extends Controller
 	
 
     public function itemView()
-    { //CHANGE TO USE COLUMN NAMES OF TASKS TABLE
-    	$this->panddingItem = Task::where('status',0)
-		                    ->orderBy('priority')
-							->get();
+    {
     	$this->completeItem = Task::where('status',1)
 		                    ->orderBy('priority')
 							->get();
-    	//return view('test',compact('panddingItem','completeItem')); this return result of compact(...) 'test' view page.
-    	//return view('tasks.index',compact('panddingItem','completeItem'));// send data to 'tasks.index.blade.php' view page.
-		 //return compact('panddingItem','completeItem');
-		}
+	}
+			
+			
     public function updateItems(Request $request)
     { 
-	  //DONE*** MODIFY TASK TABLE TO INCLUDE 'STATUS' AND 'ORDER' COLUMNS.
-	  //consider using strings for status such as 'pending' and 'complete'
     	$input = $request->all();
-        
-		if(!empty($input['pending']))
-    	{
-			foreach ($input['pending'] as $key => $value) {
-				$key = $key + 1;
-				Task::where('id',$value)
-						->update([
-							'status'=>0,
-							'priority'=>$key
-						]);
-			}
-		}
-        
+		
 		if(!empty($input['accept']))
     	{
 			foreach ($input['accept'] as $key => $value) {
@@ -127,5 +111,26 @@ class TaskController extends Controller
 		}
     	return response()->json(['status'=>'success']);
     }
- 	
+
+	
+	public function populateProjects()
+	{
+	$projects = Project::all();
+	//return view('projects.index', compact(users));
+	return $projects; 
+	}	
+	
+	public function saveUser(Request $rq)
+	{
+	$selectedUser = new SelectedUser;
+	$selectedUser->name = $rq->user_selected;
+	$selectedUser->save();
+
+	return redirect()->back()->with('success', 'Selected Username added successfuly');
+	}
+	
+
+	
 }
+
+
