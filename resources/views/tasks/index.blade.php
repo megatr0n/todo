@@ -18,10 +18,10 @@
 
                         <!-- Task Name -->
                         <div class="form-group">
-                            <label for="task-name" class="col-sm-3 control-label">Task</label>
+                            <label for="task-name" class="col-sm-3 control-label">Name</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
+                                <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}" required focus>
                             </div>
 							
 							<br /><br />
@@ -32,13 +32,12 @@
                             <label for="task-project" class="col-sm-3 control-label">Project</label>
 
                             <div class="col-sm-6">
-								<select class="form-control" id="selectproject" name="project_selected" required focus>
+								<select class="form-control" id="selectproject" name="project" required focus>
 									<option value="" disabled selected>Please select project</option>        
 										@foreach($projects as $project)
-										<option value="{{$project->id}}">{{ $project->name }}</option>
+										<option value="{{$project->id}}_{{ $project->name }}">{{ $project->name }}</option>
 										@endforeach
-							    </select>
-							<label class="task-name"  id="displayproject">Show selected project here</label>								
+							    </select>								
                             </div>							
                         </div>
 
@@ -56,9 +55,6 @@
 
             <!-- Current Tasks -->
             @if (count($tasks) > 0)
-				@if (count($projects) > 0)
-			        <h1>Many projects found.</h1>
-				@endif	
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Current Tasks
@@ -66,7 +62,11 @@
                     <div class="panel-body">
                         <table class="table table-striped task-table">
                             <thead>
-                                <th>Task</th>
+                                <th>Name</th>
+								<th>Priority</th>
+								<th>Status</th>
+								<th>Project</th>
+								<th>Date</th>
                                 <th>&nbsp;</th>
                             </thead>
                             <tbody  class="list-group  connectedSortable" id="complete-item-drop">
@@ -74,7 +74,23 @@
 									@foreach ($completeItem as $key => $task)
 										<tr item-id="{{ $task->id }}">
 											<td class="table-text"><div>{{ $task->name }}</div></td>
+											<td class="table-text"><div>{{ $task->priority }}</div></td>
+											<td class="table-text"><div>{{ $task->status }}</div></td>
+											<td class="table-text"><div>{{ $task->projectname() }}</div></td>
+											<td class="table-text"><div>{{ $task->created_at }}</div></td>
 
+
+											<!-- Task Edit Button -->
+											<td>
+												<form action="{{url('/edit')}}" method="POST">
+													{{ csrf_field() }}			
+													<input type="hidden" name="taskid" value="{{ $task->id }}" />
+													<button type="submit" id="edit-task-{{ $task->id }}" class="btn btn-danger">
+														<i class="fa fa-btn fa-trash"></i>Edit
+													</button>
+												</form>
+											</td>
+											
 											<!-- Task Delete Button -->
 											<td>
 												<form action="{{url('task/' . $task->id)}}" method="POST">

@@ -21,7 +21,7 @@
                         <div class="form-group">
 					
 						
-                            <label for="task-name" class="col-sm-3 control-label">Project</label>
+                            <label for="task-name" class="col-sm-3 control-label">Name</label>
 
                             <div class="col-sm-6">
                                 <input type="text" name="name" id="task-name" class="form-control" value="{{ old('project') }}">
@@ -50,7 +50,7 @@
                     </form>	
                 </div>
             </div>
-
+        </div>
             <!-- Current Projects -->
             @if (count($projects) > 0)
                 <div class="panel panel-default">
@@ -61,15 +61,18 @@
                     <div class="panel-body">
                         <table class="table table-striped task-table">
                             <thead>
-                                <th>Project</th>
+                                <th>Name</th>
+								<th>Details</th>
+								<th>Date</th>
                                 <th>&nbsp;</th>
                             </thead>
                             <tbody>
                                 @foreach ($projects as $project)
                                     <tr>
                                         <td class="table-text"><div>{{ $project->name }}</div></td>
-
-                                        <!-- Task Delete Button -->
+										<td class="table-text"><div>{{ $project->detail }}</div></td>
+										<td class="table-text"><div>{{ $project->created_at }}</div></td>
+                                        <!-- Project Delete Button -->
                                         <td>
                                             <form action="{{url('project/' . $project->id)}}" method="POST">
                                                 {{ csrf_field() }}

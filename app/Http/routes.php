@@ -34,13 +34,14 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/update-items', 'TaskController@updateItems')->name('update.items');	
     Route::get('/tasks', 'TaskController@index');
     Route::post('/task', 'TaskController@store');
+    Route::post('/edit', 'TaskController@edit');
+    Route::post('/update', 'TaskController@update');	
     Route::delete('/task/{task}', 'TaskController@destroy');
-    //Route::get('/selected-project', 'ProjectController@populateProjects');	
+
 	
     Route::get('/projects', 'ProjectController@index');
     Route::post('/project', 'ProjectController@store');
     Route::delete('/project/{project}', 'ProjectController@destroy');	
-    Route::POST('/selected-project', 'ProjectController@saveUser')->name('save.selected-user');
 	
     Route::auth();
 

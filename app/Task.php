@@ -2,6 +2,7 @@
 
 namespace App;
 use App\User;
+use App\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
@@ -29,4 +30,35 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+	
+	
+    /**
+     * Get the name of project from the id of project.
+     */
+    public function projectname()
+	{
+		$projectname = NULL;
+		$projects = Project::where('id', $this->project)->get();
+			foreach ($projects as $project)//under normal circumstance this will run only once. 
+			{
+			 $projectname = $project->name;
+			}		
+		return $projectname;
+    }
+
+	
+    /**
+     * Get the detail of project from using id of project.
+     */
+    public function projectdetail()
+	{
+		$projectdetail = NULL;		
+		$projects = Project::where('id', $this->project)->get();
+			foreach ($projects as $project)//under normal circumstance this will run only once. 
+			{
+			 $projectdetail = $project->detail;
+			}		
+		return $projectdetail;
+    }
+	
 }

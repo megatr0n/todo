@@ -36,7 +36,6 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     { 
-	 //$projects = $this->populateProjects();
         return view('projects.index', [
             'projects' => $this->projects->forUser($request->user()),
         ]);
@@ -75,15 +74,6 @@ class ProjectController extends Controller
 		return redirect('/projects');
     }
 
-
-	public function saveUser(Request $rq)
-	{
-	$selectedUser = new SelectedUser;
-	$selectedUser->name = $rq->user_selected;
-	$selectedUser->save();
-
-	return redirect()->back()->with('success', 'Selected Username added successfuly');
-	}
 	
 
 	

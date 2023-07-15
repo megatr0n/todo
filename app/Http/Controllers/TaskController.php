@@ -57,15 +57,17 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-		$tnum = count($tasks);
+		$tnum = count($this->tasks);
         $this->validate($request, [
             'name' => 'required|max:255',
+			'project' => 'required|max:255',
         ]);
 
         $request->user()->tasks()->create([
-            'name' => $request->name, 'project' => $request->user_selected, 'priority' => $tnum,
+            'name' => $request->name, 'project' => $request->project, 'priority' => $tnum,
         ]);
-
+		$this->tasks = Task::all();
+		$tnum = count($this->tasks);		
         return redirect('/tasks');
     }
 
@@ -86,9 +88,45 @@ class TaskController extends Controller
     }
 	
 
+    /**
+     * Edit the given task.
+     *
+     * @param  Request  $request
+     * @param  Task  $task
+     * @return Response
+     */
+    public function edit(Request $request)
+    {   $task = NULL;
+		$projects = $this->populateProjects(); 
+		$Tasks= Task::where('id',$request->taskid)->get();
+			foreach($Tasks as $key => $value)//this is supposed to run once.
+			{
+			 $task = $value;	
+			}
+        return view('/tasks.edit', ['task'=>$task, 'projects'=>$projects]);
+    }	
+
+
+    public function update(Request $request)
+    {
+		$Tasks= Task::where('id',$request->taskid)->get();
+			foreach($Tasks as $key => $value)//this is supposed to run once.
+			{
+			 $task = $value;	
+			}		
+        //$this->authorize('update', $task);
+		Task::where('id', $task->id)->update([
+		'name' => $request->name,
+		'status' => $request->status,
+		'project' => $request->project,
+		]);		
+        return redirect('/tasks');
+    }	
+
+	
     public function itemView()
     {
-    	$this->completeItem = Task::where('status',1)
+    	$this->completeItem = Task::where('status','>=',0)
 		                    ->orderBy('priority')
 							->get();
 	}
@@ -116,18 +154,9 @@ class TaskController extends Controller
 	public function populateProjects()
 	{
 	$projects = Project::all();
-	//return view('projects.index', compact(users));
 	return $projects; 
 	}	
-	
-	public function saveUser(Request $rq)
-	{
-	$selectedUser = new SelectedUser;
-	$selectedUser->name = $rq->user_selected;
-	$selectedUser->save();
 
-	return redirect()->back()->with('success', 'Selected Username added successfuly');
-	}
 	
 
 	
