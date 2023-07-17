@@ -56,10 +56,10 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Task List
+                    >>Task<< 
                 </a>
                 <a class="navbar-brand" href="{{ url('/projects') }}">
-                    Project List
+                    >>Project<< 
                 </a>				
             </div>
 

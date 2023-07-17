@@ -19,26 +19,40 @@
                         <!-- Task Name -->
                         <div class="form-group">
                             <label for="task-name" class="col-sm-3 control-label">Name</label>
-
                             <div class="col-sm-6">
                                 <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}" required focus>
-                            </div>
-							
+                            </div>							
 							<br /><br />
+
+                        <!-- Task Detail -->							
+                            <label for="task-name" class="col-sm-3 control-label">Details</label>
+                            <div class="col-sm-6">
+                                <textarea name="detail" id="task-name" class="form-control" value="" rows="4">Write details of the project here.</textarea>
+                            </div>
+							<br /><br />	
+							
                         <!-- Add Task Dropdownlist for Project -->	
 						    @if(session('success'))
 							  <h1>{{session('success')}}</h1>
 						    @endif						
-                            <label for="task-project" class="col-sm-3 control-label">Project</label>
 
-                            <div class="col-sm-6">
-								<select class="form-control" id="selectproject" name="project" required focus>
-									<option value="" disabled selected>Please select project</option>        
-										@foreach($projects as $project)
-										<option value="{{$project->id}}_{{ $project->name }}">{{ $project->name }}</option>
-										@endforeach
-							    </select>								
-                            </div>							
+							@if(!empty($project))
+								<label for="task-project" class="col-sm-3 control-label">Project</label>
+								<div class="col-sm-6">									
+										<select class="form-control" id="selectproject" name="project" required focus>
+											<option value="" disabled selected>Please select project</option>        
+												@foreach($projects as $project)
+												<option value="{{$project->id}}_{{ $project->name }}">{{ $project->name }}</option>
+												@endforeach
+										</select>
+								</div>									
+							@else
+								<br /><br /><br /><br />
+								<div class="col-sm-6" style="padding-left: 110px;">	
+									<label for="task-name" class="col-sm-3 control-label">No&nbsp;project&nbsp;exist&nbsp;for&nbsp;new&nbsp;task&nbsp;assignment.&nbsp;<a href="{{ url('projects') }}">Click&nbsp;here&nbsp;to&nbsp;create&nbsp;one</a>.</label>	
+								</div>	
+							@endif									
+							
                         </div>
 
                         <!-- Add Task Button -->
@@ -109,7 +123,9 @@
                         </table>
                     </div>
                 </div>
-            @endif
+            @else
+                <div class="panel panel-default"><div class="panel-body" style="text-align:center;"><h6>empty</h6></div></div>				
+            @endif	
         </div>
     </div>					
 	<!-- custom scripts below-->

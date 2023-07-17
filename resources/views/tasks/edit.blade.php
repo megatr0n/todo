@@ -24,9 +24,16 @@
 								<div class="col-sm-6">
 									<input type="text" name="name" id="task-name" class="form-control" value="{{ $task->name }}" required focus>
 									<input type="hidden" name="taskid" value="{{ $task->id }}" />
-								</div>
-								
+								</div>							
 								<br /><br />
+								
+							<!-- Task Detail -->							
+								<label for="task-name" class="col-sm-3 control-label">Details</label>
+								<div class="col-sm-6">
+									<textarea name="detail" id="task-name" class="form-control" value="" rows="4">{{ $task->detail }}</textarea>
+								</div>
+								<br /><br />	
+							
 							<!-- Add Task Dropdownlist for Project -->	
 								@if(session('success'))
 								  <h1>{{session('success')}}</h1>
@@ -60,7 +67,7 @@
 							
 							</div>
 
-							<!-- Add Task Button -->
+							<!-- Save Task Button -->
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-6">
 									<button type="submit" class="btn btn-default">

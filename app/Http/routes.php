@@ -41,6 +41,8 @@ Route::group(['middleware' => ['web']], function () {
 	
     Route::get('/projects', 'ProjectController@index');
     Route::post('/project', 'ProjectController@store');
+    Route::post('/modify', 'ProjectController@modify');
+    Route::post('/change', 'ProjectController@change');	
     Route::delete('/project/{project}', 'ProjectController@destroy');	
 	
     Route::auth();

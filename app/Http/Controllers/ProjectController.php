@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Project; 
 use App\Repositories\ProjectRepository;
@@ -60,6 +61,42 @@ class ProjectController extends Controller
         return redirect('/projects');
     }
 
+	
+    /**
+     * Modify the given project.
+     *
+     * @param  Request  $request
+     * @param  Project  $project
+     * @return Response
+     */
+    public function modify(Request $request)
+    {   $project = NULL;
+		$project = Project::where('id',$request->projectid)->first();		
+        return view('/projects.modify', ['project'=>$project]);
+    }		
+	
+
+    /**
+     * Change the given project record.
+     *
+     * @param  Request  $request
+     * @param  Project  $project
+     * @return Response
+     */	
+    public function change(Request $request)
+    {
+		$project = Project::where('id',$request->projectid)->first();
+        $this->authorize('change', $project);
+		
+		//update the project record
+		Project::where('id', $project->id)->update([
+		'name' => $request->name,
+		'detail' => $request->detail,
+		]);		
+        return redirect('/projects');
+    }
+	
+	
     /**
      * Destroy the given project.
      *

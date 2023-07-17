@@ -72,6 +72,20 @@
                                         <td class="table-text"><div>{{ $project->name }}</div></td>
 										<td class="table-text"><div>{{ $project->detail }}</div></td>
 										<td class="table-text"><div>{{ $project->created_at }}</div></td>
+										
+										
+										<!-- Project Modify Button -->
+										<td>
+											<form action="{{url('/modify')}}" method="POST">
+												{{ csrf_field() }}			
+												<input type="hidden" name="projectid" value="{{ $project->id }}" />
+												<button type="submit" id="modify-project-{{ $project->id }}" class="btn btn-danger">
+													<i class="fa fa-btn fa-trash"></i>Modify
+												</button>
+											</form>
+										</td>	
+										
+										
                                         <!-- Project Delete Button -->
                                         <td>
                                             <form action="{{url('project/' . $project->id)}}" method="POST">
@@ -89,7 +103,9 @@
                         </table>
                     </div>
                 </div>
-            @endif
+            @else
+                <div class="panel panel-default"><div class="panel-body" style="text-align:center;"><h6>empty</h6></div></div>				
+            @endif			
         </div>
     </div>					
 	<!-- custom scripts below-->

@@ -22,5 +22,18 @@ class TaskPolicy
         return $user->id === $task->user_id;
     }
 
+
+	/**
+	* Determine whether the user can update the task.
+	*
+	* @param  \App\User  $user
+	* @param  \App\Task  $task
+	* @return mixed
+	*/
+	public function update(User $user, Task $task)
+	{
+	return $user->id == $task->user_id;
+	}
+
 	
 }

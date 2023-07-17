@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Auth;
 use App\Task;
 use App\Project;
 use App\Repositories\TaskRepository;
@@ -64,7 +64,7 @@ class TaskController extends Controller
         ]);
 
         $request->user()->tasks()->create([
-            'name' => $request->name, 'project' => $request->project, 'priority' => $tnum,
+            'name' => $request->name, 'detail' => $request->detail, 'project' => $request->project, 'priority' => $tnum,
         ]);
 		$this->tasks = Task::all();
 		$tnum = count($this->tasks);		
@@ -98,55 +98,63 @@ class TaskController extends Controller
     public function edit(Request $request)
     {   $task = NULL;
 		$projects = $this->populateProjects(); 
-		$Tasks= Task::where('id',$request->taskid)->get();
-			foreach($Tasks as $key => $value)//this is supposed to run once.
-			{
-			 $task = $value;	
-			}
+		$task = Task::where('id',$request->taskid)->first();		
         return view('/tasks.edit', ['task'=>$task, 'projects'=>$projects]);
     }	
 
 
+    /**
+     * Update the given task record.
+     *
+     * @param  Request  $request
+     * @param  Task  $task
+     * @return Response
+     */	
     public function update(Request $request)
     {
-		$Tasks= Task::where('id',$request->taskid)->get();
-			foreach($Tasks as $key => $value)//this is supposed to run once.
-			{
-			 $task = $value;	
-			}		
-        //$this->authorize('update', $task);
+		$task = Task::where('id',$request->taskid)->first();
+        $this->authorize('update', $task);
+		
+		//update the task record
 		Task::where('id', $task->id)->update([
 		'name' => $request->name,
+		'detail' => $request->detail,		
 		'status' => $request->status,
 		'project' => $request->project,
 		]);		
         return redirect('/tasks');
     }	
 
-	
+
+    /**
+     * ItemView(View) all tasks as a list of items.
+     *
+     */	
     public function itemView()
     {
-    	$this->completeItem = Task::where('status','>=',0)
-		                    ->orderBy('priority')
-							->get();
+		if (Task::exists()) {
+			$this->completeItem = Task::where('status','>=',0)->orderBy('priority')->get();
+		die();
+		} else {
+		}		
 	}
 			
 			
     public function updateItems(Request $request)
     { 
-    	$input = $request->all();
-		
-		if(!empty($input['accept']))
-    	{
-			foreach ($input['accept'] as $key => $value) {
-				$key = $key + 1;
-				Task::where('id',$value)
-						->update([
-							'status'=>1,
-							'priority'=>$key
-						]);
+    	$input = $request->all();	
+			if(!empty($input['accept']) && Task::exists())
+			{
+				foreach ($input['accept'] as $key => $value) {
+					
+			    //update the task priority
+					$key = $key + 1;
+					Task::where('id',$value)
+							->update([
+								'priority'=>$key
+							]);
+				}
 			}
-		}
     	return response()->json(['status'=>'success']);
     }
 
