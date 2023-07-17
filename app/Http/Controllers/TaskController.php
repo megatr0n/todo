@@ -57,17 +57,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-		$tnum = count($this->tasks);
+		$this->tasks = Task::all();
+		$tnum = count($this->tasks)+1;
         $this->validate($request, [
             'name' => 'required|max:255',
 			'project' => 'required|max:255',
         ]);
 
         $request->user()->tasks()->create([
-            'name' => $request->name, 'detail' => $request->detail, 'project' => $request->project, 'priority' => $tnum,
+            'name' => $request->name, 'detail' => $request->detail, 'project' => $request->project, 'priority' => $tnum, 'status' => 0,
         ]);
 		$this->tasks = Task::all();
-		$tnum = count($this->tasks);		
+		$tnum = count($this->tasks)+1;		
         return redirect('/tasks');
     }
 
@@ -132,9 +133,8 @@ class TaskController extends Controller
      */	
     public function itemView()
     {
-		if (Task::exists()) {
+		if (Task::exists()) {//check if tasks table exists
 			$this->completeItem = Task::where('status','>=',0)->orderBy('priority')->get();
-		die();
 		} else {
 		}		
 	}

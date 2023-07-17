@@ -37,7 +37,8 @@
 							<!-- Add Task Dropdownlist for Project -->	
 								@if(session('success'))
 								  <h1>{{session('success')}}</h1>
-								@endif						
+								@endif	
+								<br /><br /><br /><br />	
 								<label for="task-project" class="col-sm-3 control-label">Project</label>
 
 								<div class="col-sm-6">
@@ -49,6 +50,7 @@
 									</select>								
 								</div>	
 
+								<br /><br /><br /><br />
 								<div class="col-sm-6">
 									@if($task->status > 0)
 									<br>	

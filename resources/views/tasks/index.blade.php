@@ -36,7 +36,8 @@
 							  <h1>{{session('success')}}</h1>
 						    @endif						
 
-							@if(!empty($project))
+							@if( count($projects)>0 )
+								<br /><br /><br /><br />
 								<label for="task-project" class="col-sm-3 control-label">Project</label>
 								<div class="col-sm-6">									
 										<select class="form-control" id="selectproject" name="project" required focus>
@@ -77,6 +78,7 @@
                         <table class="table table-striped task-table">
                             <thead>
                                 <th>Name</th>
+								<th>Detail</th>
 								<th>Priority</th>
 								<th>Status</th>
 								<th>Project</th>
@@ -88,6 +90,7 @@
 									@foreach ($completeItem as $key => $task)
 										<tr item-id="{{ $task->id }}">
 											<td class="table-text"><div>{{ $task->name }}</div></td>
+											<td class="table-text"><div>{{ $task->detail }}</div></td>											
 											<td class="table-text"><div>{{ $task->priority }}</div></td>
 											<td class="table-text"><div>{{ $task->status }}</div></td>
 											<td class="table-text"><div>{{ $task->projectname() }}</div></td>
@@ -151,7 +154,8 @@
 				},
 				data: {accept:accept},
 				success: function(data) {
-				  console.log('success');
+					console.log('success');
+					window.location.reload();
 				}
 			});
 			  
