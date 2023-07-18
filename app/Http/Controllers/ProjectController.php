@@ -74,6 +74,17 @@ class ProjectController extends Controller
 		$project = Project::where('id',$request->projectid)->first();		
         return view('/projects.modify', ['project'=>$project]);
     }		
+
+
+
+    /**
+     * info about the app.
+     */
+    public function about()
+    {   		
+        return view('/projects.about');
+    }		
+
 	
 
     /**

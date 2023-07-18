@@ -60,6 +60,9 @@
                 </a>
                 <a class="navbar-brand" href="{{ url('/projects') }}">
                     >>Project<< 
+                </a>
+                <a class="navbar-brand" href="{{ url('/about') }}">
+                    >>About<< 
                 </a>				
             </div>
 

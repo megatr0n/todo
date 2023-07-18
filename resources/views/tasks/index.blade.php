@@ -78,7 +78,7 @@
                         <table class="table table-striped task-table">
                             <thead>
                                 <th>Name</th>
-								<th>Detail</th>
+								<!--<th>Detail</th>-->
 								<th>Priority</th>
 								<th>Status</th>
 								<th>Project</th>
@@ -90,7 +90,7 @@
 									@foreach ($completeItem as $key => $task)
 										<tr item-id="{{ $task->id }}">
 											<td class="table-text"><div>{{ $task->name }}</div></td>
-											<td class="table-text"><div>{{ $task->detail }}</div></td>											
+											<!--<td class="table-text"><div>{{ $task->detail }}</div></td>-->											
 											<td class="table-text"><div>{{ $task->priority }}</div></td>
 											<td class="table-text"><div>{{ $task->status }}</div></td>
 											<td class="table-text"><div>{{ $task->projectname() }}</div></td>
