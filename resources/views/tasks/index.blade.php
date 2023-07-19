@@ -27,7 +27,7 @@
                         <!-- Task Detail -->							
                             <label for="task-name" class="col-sm-3 control-label">Details</label>
                             <div class="col-sm-6">
-                                <textarea name="detail" id="task-name" class="form-control" value="" rows="4">Write details of the project here.</textarea>
+                                <textarea name="detail" id="task-name" class="form-control" value="" rows="4">Write details of the task here.</textarea>
                             </div>
 							<br /><br />	
 							

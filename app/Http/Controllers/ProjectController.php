@@ -6,6 +6,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Project; 
+use App\Task;
 use App\Repositories\ProjectRepository;
 class ProjectController extends Controller
 {
@@ -117,8 +118,21 @@ class ProjectController extends Controller
      */
     public function destroy(Request $request, Project $project)
     {	
+		//delete all tasks associated with the project
+		$tasks = Task::all();
+			foreach ($tasks as $task)
+			{
+				if($task->project == $project->id)
+				{
+					$this->authorize('destroy', $task);
+					$task->delete();					
+				}	
+			}
+			
+		//delete project	
 		$this->authorize('destroy', $project);
 		$project->delete();
+				
 		return redirect('/projects');
     }
 
