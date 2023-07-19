@@ -89,7 +89,7 @@
 								@if(!empty($completeItem) && $completeItem->count())
 									@foreach ($completeItem as $key => $task)
 										<tr item-id="{{ $task->id }}">
-											<td class="table-text"><div>{{ $task->name }}</div></td>
+											<td class="table-text"><div onclick="alert('{{ $task->detail }}')">{{ $task->name }}</div></td>
 											<!--<td class="table-text"><div>{{ $task->detail }}</div></td>-->											
 											<td class="table-text"><div>{{ $task->priority }}</div></td>
 											<td class="table-text"><div>{{ $task->status }}</div></td>
